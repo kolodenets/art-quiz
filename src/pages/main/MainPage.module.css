@@ -11,10 +11,7 @@
   margin-bottom: 50px;
 }
 
-.mainLogo {
-  width: 220px;
-  margin: 50px 0;
-}
+
 .quizSelect {
   display: flex;
   flex-direction: column;

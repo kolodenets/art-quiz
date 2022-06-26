@@ -1,11 +1,11 @@
 import { Button } from 'antd';
-import {SettingOutlined} from '@ant-design/icons'
 import React from 'react';
 
-const MyButton = () => {
+
+const MyButton = ({handleBtnClick, children, icon}) => {
   return (
-    <Button type="primary" style={{backgroundColor: 'var(--main-bg-color)'}} size="large" icon={<SettingOutlined />}>
-      SETTINGS 
+    <Button onClick={handleBtnClick} type="primary" style={{backgroundColor: 'var(--main-bg-color)', outline: 'none', border: 'none', width: '150px', height: '50px'}} size="large" icon={icon}>
+      {children}
     </Button>
   );
 };

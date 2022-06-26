@@ -1,15 +1,21 @@
 import React from 'react';
-import MyButton from '../UI/button/MyButton';
+import MyButton from '../../UI/button/MyButton';
 import styles from './MainPage.module.css'
-const logo = '../logo.png'
+import { useNavigate } from 'react-router-dom';
+import LogoImage from './../../UI/logo/LogoImage';
+import {SettingOutlined} from '@ant-design/icons'
 const artistImg = '../artists-quiz.png'
 const picturesImg = '../pictures-quiz.png'
 
 
 const MainPage = () => {
+  const navigate = useNavigate();
+  const handleBtnClick = () => {
+    navigate('/settings')
+  }
   return (
     <div className={styles.outerContainer}>
-      <img className={styles.mainLogo} src={logo} alt="logo" />
+      <LogoImage/>
       <div className={styles.innerContainer}>
         <div className={styles.quizSelect}>
           <img className={styles.quizImg} src={artistImg}  alt="artist" />
@@ -20,7 +26,7 @@ const MainPage = () => {
           <p className={styles.quizTitle} style={{marginTop: '-4px'}}><span style={{fontWeight: '700'}}>Pictures </span>quiz</p>
         </div>
       </div>
-      <MyButton/>
+      <MyButton icon={<SettingOutlined />} handleBtnClick={handleBtnClick}>SETTINGS</MyButton>
     </div>
   );
 };

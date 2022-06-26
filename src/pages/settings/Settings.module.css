@@ -1,0 +1,152 @@
+.outerContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.innerContainer {
+  display: flex;
+  width: 1000px;
+  justify-content: space-between;
+  margin-bottom: 100px;
+}
+
+.mainLogo {
+  width: 220px;
+  margin: 50px 0 21px 0;
+}
+.setting {
+  display: flex;
+  flex-direction: column;
+  width: 415px;
+  height: 415px;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.settingsTitle,
+.settingsVol,
+.settingsTime  {
+  font-size: 36px;
+  line-height: 44px;
+  text-align: right;
+  text-transform: uppercase;
+  padding-right: 17px;
+  color: #660033;
+  margin-bottom: 21px;
+}
+
+.soundSvg {
+  color: var(--main-bg-color);
+  font-size: 100px;
+  margin-top: 89px;
+}
+
+.soundBar {
+  display: flex;
+  margin-top: 57px;
+  height: 30px;
+}
+
+.mute {
+  font-size: 30px;
+  color: var(--main-bg-color);
+  margin-right: 5px;
+}
+.slideContainer {
+  width: 270px;
+  padding-top: 2px;
+}
+.soundSlider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  background: linear-gradient(90deg, var(--main-bg-color) 50%, #e5e5e5 50%);
+  outline: none;
+  border-radius: 10px;
+}
+
+.soundSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  background: var(--main-bg-color);
+  border-radius: 50%;
+  border: 2px solid white;
+  cursor: pointer;
+}
+
+.soundSlider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: var(--main-bg-color);
+  border-radius: 50%;
+  border: 2px solid white;
+  cursor: pointer;
+}
+
+.settingsVol,
+.settingsTime {
+  margin-top: 60px;
+  font-weight: 700;
+  text-align: center;
+  padding-right: 0;
+  margin-bottom: 0;
+}
+.settingsTime {
+  margin-top: 50px;
+}
+.btnContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 350px;
+}
+
+.time {
+  font-size: 80px;
+  color: var(--main-bg-color);
+  margin-top: 89px;
+}
+.timeText {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  text-transform: uppercase;
+  color: #660033;
+  margin-top: 13px;
+}
+
+.checkboxCont {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.checkbox {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+}
+
+.checkbox+label {
+  display: inline-flex;
+  align-items: center;
+  user-select: none;
+}
+.checkbox+label::before {
+  content: '';
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--main-bg-color);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 50% 50%;
+}
+.checkbox:checked+label::before {
+  background-image: url('../../../public/Vector.png');
+  background-size: 26px 24px;
+}
