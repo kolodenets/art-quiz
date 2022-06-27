@@ -1,14 +1,33 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import MyButton from '../../UI/button/MyButton';
 import styles from './Settings.module.css'
 import { BsVolumeUpFill, BsVolumeMuteFill, BsAlarmFill } from "react-icons/bs";
 import LogoImage from './../../UI/logo/LogoImage';
+import { useNavigate } from 'react-router-dom';
 
 
 
 
 const Settings = () => {
+  const navigate = useNavigate();
   const [value, setValue] = useState(50)
+  const [checked, setChecked] = useState(false)
+  const handleSaveBtnClick = () => {
+    localStorage.setItem('volume', `${value}`)
+    localStorage.setItem('timer', `${checked}`)
+    navigate('/')
+  }
+  
+  const handleDefaultBtnClick = () => {
+    setChecked(false)
+    setValue(50) 
+  }
+
+  useEffect(() => {
+    setValue(localStorage.getItem('volume') === null ? 50 : Number(localStorage.getItem('volume')))
+    setChecked(localStorage.getItem('timer') === 'true' ? true : false)
+  }, [])
+
   return (
     <div className={styles.outerContainer}>
       <LogoImage/>
@@ -37,18 +56,19 @@ const Settings = () => {
           <div className={styles.checkboxCont}>
             <input type="checkbox"
                     className={styles.checkbox}
-                    id='time-checkbox'/>
-                    <label htmlFor="time-checkbox"></label>
+                    id='time-checkbox'
+                    onChange={() => checked ? setChecked(false) : setChecked(true)}
+                    checked={checked}/>
+            <label htmlFor="time-checkbox"></label>
             <p className={styles.timeText}>ON/OFF</p>
           </div>
           <p className={styles.settingsTime}>Time game</p>
         </div>
       </div>
       <div className={styles.btnContainer}>
-        <MyButton>SAVE</MyButton>
-        <MyButton>DEFAULTS</MyButton>
+        <MyButton handleBtnClick={handleSaveBtnClick}>SAVE</MyButton>
+        <MyButton handleBtnClick={handleDefaultBtnClick}>DEFAULTS</MyButton>
       </div>
-      
     </div>
   );
 };
