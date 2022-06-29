@@ -22,14 +22,16 @@ const Settings = () => {
     setChecked(false)
     setValue(50) 
   }
-
+  const isChecked = () => {
+    return checked ? setChecked(false) : setChecked(true)
+  }
   useEffect(() => {
     setValue(localStorage.getItem('volume') === null ? 50 : Number(localStorage.getItem('volume')))
     setChecked(localStorage.getItem('timer') === 'true' ? true : false)
   }, [])
 
   return (
-    <div className={styles.outerContainer}>
+    <div className='outerContainer'>
       <LogoImage/>
       <p className={styles.settingsTitle}>SETTINGS</p>
       <div className={styles.innerContainer}>
@@ -57,7 +59,7 @@ const Settings = () => {
             <input type="checkbox"
                     className={styles.checkbox}
                     id='time-checkbox'
-                    onChange={() => checked ? setChecked(false) : setChecked(true)}
+                    onChange={isChecked}
                     checked={checked}/>
             <label htmlFor="time-checkbox"></label>
             <p className={styles.timeText}>ON/OFF</p>

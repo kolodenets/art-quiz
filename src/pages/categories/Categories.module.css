@@ -1,0 +1,25 @@
+.innerContainer {
+  display: flex;
+  width: 1000px;
+  justify-content: space-between;
+}
+
+.nav {
+  width: inherit;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 21px;
+}
+.title {
+  font-size: 36px;
+  line-height: 44px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.itemsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}

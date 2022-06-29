@@ -27,7 +27,11 @@ p {
   flex-direction: column;
   align-items: center;
 }
-
+.outerContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .mainLogo {
   width: 220px;
   margin: 50px 0;
