@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import MyButton from '../../UI/button/MyButton';
 import LogoImage from '../../UI/logo/LogoImage';
 import styles from './Categories.module.css'
@@ -24,14 +25,22 @@ const styledBtn = {
 const iconStyle = { width: '40px', height: '40px'}
 
 const Categories = () => {
+  const navigate = useNavigate();
+  const handleHomeBtnClick = () => {
+    navigate('/')
+  }
+  const handleScoreBtnClick = () => {
+    navigate('/score')
+  }
+
   return (
     <div className='outerContainer'>
       <LogoImage/>
       <div className={styles.innerContainer}>
         <div className={styles.nav}>
-          <MyButton btnStyles={styledBtn} icon={<BsHouseFill style={iconStyle}/>}>Home</MyButton>
+          <MyButton handleBtnClick={handleHomeBtnClick} btnStyles={styledBtn} icon={<BsHouseFill style={iconStyle}/>}>Home</MyButton>
           <span className={styles.title}>Categories</span>
-          <MyButton btnStyles={styledBtn} icon={<AiTwotoneStar style={iconStyle}/>}>Score</MyButton>
+          <MyButton handleBtnClick={handleScoreBtnClick} btnStyles={styledBtn} icon={<AiTwotoneStar style={iconStyle}/>}>Score</MyButton>
         </div>
         <div className={styles.itemsContainer}>
 
