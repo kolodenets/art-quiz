@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 184px;
+  background-color: #ffffff;
+}
+.innerContainer {
+  display: flex;
+  width: inherit;
+  justify-content: space-between;
+}
+
+.number {
+  font-weight: 700;
+  font-size: 72px;
+  line-height: 88px;
+  color: #555555;
+}
+
+.result {
+  font-size: 18px;
+  line-height: 22px;
+  padding-top: 16px;
+  padding-right: 8px;
+  color: var(--main-bg-color);
+}
+.image {
+  height: 200px;
+}
+
+.image img {
+  padding-top: 10px;
+}
