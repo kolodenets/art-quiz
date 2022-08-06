@@ -8,7 +8,6 @@ import {AiTwotoneStar} from "react-icons/ai"
 import Card from '../../components/card/Card';
 
 
-
 const styledBtn = {
   backgroundColor: 'var(--main-bg-color)',
   outline: 'none', 
@@ -26,6 +25,7 @@ const styledBtn = {
 
 const iconStyle = { width: '40px', height: '40px'}
 const numbers = [1,2,3,4,5,6,7,8,9,10]
+
 const Categories = () => {
   const navigate = useNavigate();
   const handleHomeBtnClick = () => {
@@ -47,7 +47,7 @@ const Categories = () => {
         
       </div>
       <div className={styles.itemsContainer}>
-        {numbers.map(item => <Card key={item} number={item} imgNumber={item}/>)}
+        {numbers.map(item => <Card key={item} number={item} imgNumber={item} />)}
         
       </div>
     </div>

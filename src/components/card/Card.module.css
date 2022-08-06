@@ -3,6 +3,7 @@
   flex-direction: column;
   width: 184px;
   background-color: #ffffff;
+  cursor: pointer;
 }
 .innerContainer {
   display: flex;
@@ -14,7 +15,6 @@
   font-weight: 700;
   font-size: 72px;
   line-height: 88px;
-  color: #555555;
 }
 
 .result {
