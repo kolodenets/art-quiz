@@ -24,9 +24,10 @@ const styledBtn = {
 }
 
 const iconStyle = { width: '40px', height: '40px'}
-const numbers = [1,2,3,4,5,6,7,8,9,10]
+export const numbers = [1,2,3,4,5,6,7,8,9,10]
 
 const Categories = () => {
+  const game = localStorage.getItem('quiz');
   const navigate = useNavigate();
   const handleHomeBtnClick = () => {
     navigate('/')
@@ -47,7 +48,7 @@ const Categories = () => {
         
       </div>
       <div className={styles.itemsContainer}>
-        {numbers.map(item => <Card key={item} number={item} imgNumber={item} />)}
+        {numbers.map(item => <Card key={item} number={item} imgNumber={item} game={game}/>)}
         
       </div>
     </div>
