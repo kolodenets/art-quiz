@@ -74,11 +74,24 @@
 .answer {
   width: 260px;
   height: 79px;
+  display: flex;
   background-color: #fff;
   cursor: pointer;
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 29px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  color: var(--main-bg-color);
 }
 .answer:hover {
-  background-color: rgba(0, 102, 53, 0.5);
+  background-color:rgba(102, 0, 51, 0.5);
+}
+.answer:active {
+  background-color:rgba(0, 102, 53, 0.5);
 }
 
 .vertical {
@@ -96,4 +109,24 @@
   left: 19px;
   width: 484px;
   border: 1px solid var(--main-bg-color);
+}
+
+.img {
+  width: 400px;
+}
+
+.correct {
+  width: 30.1px;
+  height: 30.1px;
+  background: url('./../../../public/images/right-answer.png');
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.wrong {
+  width: 30.1px;
+  height: 30.1px;
+  background: url('./../../../public/images/wrong-answer.png');
+  background-position: center;
+  background-repeat: no-repeat;
 }

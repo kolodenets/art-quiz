@@ -3,12 +3,17 @@ import LogoImage from './../../UI/logo/LogoImage';
 import style from './Game.module.css'
 import {  BsAlarmFill } from "react-icons/bs";
 import { numbers } from '../categories/Categories';
+import Popup from '../../components/modals/Popup';
+import MyButton from '../../UI/button/MyButton';
+
+
 
 const PicturesGame = ({gameData}) => {
   const startingPic = Number(gameData[0].imageNum)
   const [next, setNext] = useState(startingPic)
   const [current, setCurrent] = useState(0);
-
+  const [active, setActive] = useState(false)
+  const [isCorrect, setIsCorrect] = useState(false)
   const correctAns = gameData[current].author;
   const wrongAnswers = shuffleArray(gameData.filter(item => item.author !== correctAns)).slice(0, 3).map(item => item.author);
   const gameAnswers = shuffleArray([correctAns, ...wrongAnswers])
@@ -24,17 +29,34 @@ const PicturesGame = ({gameData}) => {
   }
 
   const checkAnswer = (answer) => {
+    if(current === 9) {
+      console.log('finish')
+      return
+    }
     if( answer === correctAns) {
+      setIsCorrect(true)
+      console.log(isCorrect)
+      
+      setActive(true)
       document.getElementById(`${ current + 1}`).style.backgroundColor = '#006635'
-      setCurrent(prev => prev + 1)
-      setNext(prev => prev + 1)
+      // setCurrent(prev => prev + 1)
+      // setNext(prev => prev + 1)
     }
     else {
+      setIsCorrect(false)
+      setActive(true)
       document.getElementById(`${ current + 1}`).style.backgroundColor = 'var(--main-bg-color)'
-      setCurrent(prev => prev + 1)
-      setNext(prev => prev + 1)
+      // setCurrent(prev => prev + 1)
+      // setNext(prev => prev + 1)
     }
   }
+
+  const handlePopupBtnClick = () => {
+    setActive(false)
+    setCurrent(prev => prev + 1)
+    setNext(prev => prev + 1)
+  }
+
   return (
     <div className='outerContainer'>
       <div className={style.header}>
@@ -68,9 +90,20 @@ const PicturesGame = ({gameData}) => {
             {answer}
           </div>
         ))}
-          
           <div className={style.vertical}></div>
           <div className={style.horizontal}></div>
+          <Popup  active={active} 
+                        setActive={setActive} 
+                        setCurrent={setCurrent} 
+                        setNext={setNext}
+                        isCorrect={isCorrect}>
+                          <div className={isCorrect ? style.correct : style.wrong}></div>
+                          <img className={style.img} src={`../images/sizedImages/${gameData[current].imageNum}.jpg`}/>
+                          <p>{gameData[current].name}</p>
+                          <p>{gameData[current].author}</p>
+                          <p>{gameData[current].year}</p>
+                          <MyButton handleBtnClick={handlePopupBtnClick}>Next</MyButton>
+          </Popup>
       </div>
     </div>
   );
