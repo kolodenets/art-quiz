@@ -130,3 +130,44 @@
   background-position: center;
   background-repeat: no-repeat;
 }
+
+.congrat {
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 44px;
+}
+
+.btnsContainer {
+  display: flex;
+  width: 340px;
+  justify-content: space-between;
+}
+
+.result {
+  font-weight: 700;
+  font-size: 96px;
+  line-height: 117px;
+}
+
+.resultImg {
+  width: 207px;
+  height: 172px;
+  background: url('./../../../public/images/Group.png');
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.styledBtn {
+  background-color: 'var(--main-bg-color)';
+  outline: none;
+  border: 'none'; 
+  width: '150px'; 
+  height: '50px'; 
+  font-size: '18px'; 
+  line-height: '22px';
+  text-transform: 'upperCase';
+  display: 'flex';
+  padding: '4px 6px';
+  align-items: 'center';
+  justify-content: 'space-between';
+}

@@ -8,7 +8,7 @@ import {AiTwotoneStar} from "react-icons/ai"
 import Card from '../../components/card/Card';
 
 
-const styledBtn = {
+export const styledBtn = {
   backgroundColor: 'var(--main-bg-color)',
   outline: 'none', 
   border: 'none', 
@@ -23,7 +23,8 @@ const styledBtn = {
   justifyContent: 'space-between',
 }
 
-const iconStyle = { width: '40px', height: '40px'}
+export const iconStyle = { width: '40px', height: '40px'}
+
 export const numbers = [1,2,3,4,5,6,7,8,9,10]
 
 const Categories = () => {

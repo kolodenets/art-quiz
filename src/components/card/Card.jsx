@@ -9,7 +9,7 @@ const Card = ({ number = 1, result = 0, imgNumber = 1, game }) => {
     navigate("/game");
     localStorage.setItem(`${game}-card${numb}-color`, "color");
     localStorage.setItem(`${game}-card${numb}-text`, "var(--main-bg-color)");
-    localStorage.setItem(`${game}-card${numb}-result`, "1");
+    localStorage.setItem(`${game}-card${numb}-visibility`, "1");
     localStorage.setItem('game-range', `${number}`);
   };
 
@@ -27,7 +27,7 @@ const Card = ({ number = 1, result = 0, imgNumber = 1, game }) => {
     number
   )}/category-${imgNumber}.png`;
   
-  const resVisibility = localStorage.getItem(`${game}-card${number}-result`) ? 1 : 0;
+  const resVisibility = localStorage.getItem(`${game}-card${number}-visibility`) ? 1 : 0;
 
   return (
     <div className={styles.container} onClick={() => clickHandler(number)}>
@@ -36,7 +36,7 @@ const Card = ({ number = 1, result = 0, imgNumber = 1, game }) => {
           {number}
         </span>
         <span className={styles.result} style={{ opacity: resVisibility }}>
-          {result}/10
+          {localStorage.getItem(`${game}-card${number}-result`)}/10
         </span>
       </div>
       <div className={styles.image}>
