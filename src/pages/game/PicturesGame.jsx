@@ -10,8 +10,6 @@ import MyButton from '../../UI/button/MyButton';
 import { shuffleArray } from '../../utils/functions';
 import { styledBtn } from './../categories/Categories';
 
-const playingCard = localStorage.getItem('game-range');
-
 const initialState = {
   active: false, 
   correctAnsCount: 0,
@@ -22,7 +20,6 @@ const initialState = {
 function reducer(state, action) {
     switch (action.type) {
       case 'changeActive' :
-        console.log('reducer')
         return {...state, active: action.payload};
       case 'changeCount':
         return {...state, correctAnsCount: state.correctAnsCount+1}  
@@ -50,12 +47,9 @@ const PicturesGame = ({gameData}) => {
 
   const correctAns = gameData[current].author;
 
-  const wrongAnswers = () => {
-    return shuffleArray(gameData.filter(item => item.author !== correctAns)).slice(0, 3).map(item => item.author)
-  };
-  const gameAnswers = () => {
-    return shuffleArray([correctAns, ...wrongAnswers()])
-  }
+  const wrongAnswers =  shuffleArray([...new Set(gameData.filter(item => item.author !== correctAns).map(item => item.author))]).slice(0, 3)
+
+  const gameAnswers =  shuffleArray([correctAns, ...wrongAnswers])
 
   const checkAnswer = (answer) => {
     if( answer === correctAns) {
@@ -73,12 +67,13 @@ const PicturesGame = ({gameData}) => {
   }
 
   const handlePopupBtnClick = () => {
+    const playingCard = localStorage.getItem('game-range');
+    localStorage.setItem(`pictures-card${playingCard}-result`, `${state.correctAnsCount}`);
     if (current < 9) {
       dispatch({type: 'changeActive', payload: false})
       setCurrent(prev => prev + 1)
       setNext(prev => prev + 1)
     } else {
-      localStorage.setItem(`pictures-card${playingCard}-result`, `${state.correctAnsCount}`);
       dispatch({type: 'activeFinishPopup', payload: true})
     }
     
@@ -111,7 +106,7 @@ const PicturesGame = ({gameData}) => {
           }</div>
       </div>
       <div className={style.answers}>
-        {gameAnswers().map(answer => (
+        {gameAnswers.map(answer => (
           <div key={answer} 
                 className={style.answer}
                 onClick={() => checkAnswer(answer)}
