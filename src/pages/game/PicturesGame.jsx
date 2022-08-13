@@ -7,7 +7,7 @@ import {  BsAlarmFill } from "react-icons/bs";
 import { iconStyle, numbers } from '../categories/Categories';
 import Popup from '../../components/modals/Popup';
 import MyButton from '../../UI/button/MyButton';
-import { shuffleArray } from '../../utils/functions';
+import { audio, shuffleArray } from '../../utils/functions';
 import { styledBtn } from './../categories/Categories';
 import gameInfo from './../../images'
 
@@ -69,6 +69,8 @@ const PicturesGame = ({ cardNumber }) => {
 
   const checkAnswer = (answer) => {
     if( answer === correctAns) {
+      audio.src = '../sounds/correct-answer-sound.mp3'
+      audio.play()
       dispatch({type: 'changeCount'})
       localStorage.setItem('correctAnswers', `${state.correctAnsCount}`)
       dispatch({type: 'changeIsCorrect', payload: true})
@@ -76,6 +78,8 @@ const PicturesGame = ({ cardNumber }) => {
       document.getElementById(`${ current + 1}`).style.backgroundColor = '#006635'
     }
     else {
+      audio.src = '../sounds/incorrect-answer-sound.mp3'
+      audio.play()
       dispatch({type: 'changeIsCorrect', payload: false})
       dispatch({type: 'changeActive', payload: true})
       document.getElementById(`${ current + 1}`).style.backgroundColor = 'var(--main-bg-color)'

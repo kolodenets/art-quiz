@@ -1,5 +1,3 @@
-import { useNavigate } from 'react-router-dom';
-import {useEffect} from 'react';
 
 export function shuffleArray(answers) {
   for (let i = answers.length - 1; i > 0; i--){
@@ -10,3 +8,6 @@ export function shuffleArray(answers) {
   }
   return answers;
 }
+
+export const audio = new Audio();
+audio.volume = 0.5

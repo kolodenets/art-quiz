@@ -4,6 +4,7 @@ import styles from './Settings.module.css'
 import { BsVolumeUpFill, BsVolumeMuteFill, BsAlarmFill } from "react-icons/bs";
 import LogoImage from './../../UI/logo/LogoImage';
 import { useNavigate } from 'react-router-dom';
+import { audio } from '../../utils/functions';
 
 
 
@@ -47,7 +48,11 @@ const Settings = () => {
                       max="100" 
                       step="1" 
                       value={value}
-                      onInput={(e) => setValue(e.target.value)}/>
+                      onInput={(e) => {
+                        audio.volume = e.target.value/100
+                        setValue(e.target.value)
+                        
+                      }}/>
             </div>
           </div>
             <p className={styles.settingsVol}>VOLUME</p>
