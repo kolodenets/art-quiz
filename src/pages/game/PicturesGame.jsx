@@ -1,4 +1,4 @@
-import React, { useState, useReducer} from 'react';
+import React, { useState, useReducer, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BsHouseFill } from "react-icons/bs";
 import LogoImage from './../../UI/logo/LogoImage';
@@ -9,6 +9,7 @@ import Popup from '../../components/modals/Popup';
 import MyButton from '../../UI/button/MyButton';
 import { shuffleArray } from '../../utils/functions';
 import { styledBtn } from './../categories/Categories';
+import gameInfo from './../../images'
 
 const initialState = {
   active: false, 
@@ -23,6 +24,8 @@ function reducer(state, action) {
         return {...state, active: action.payload};
       case 'changeCount':
         return {...state, correctAnsCount: state.correctAnsCount+1}  
+      case 'resetCount':
+        return {...state, correctAnsCount: 0}  
       case 'changeIsCorrect':
         return {...state, isCorrect: action.payload}  
       case 'activeFinishPopup':
@@ -32,8 +35,11 @@ function reducer(state, action) {
     }
   }
 
-const PicturesGame = ({gameData}) => {
-  const startingPic = Number(gameData[0].imageNum)
+const PicturesGame = ({ cardNumber }) => {
+  const [card, setCard] = useState(cardNumber)
+
+  let gameData = gameInfo.slice((card - 1)*10, card*10 )
+  let startingPic = Number(gameData[0].imageNum)
 
   const [next, setNext] = useState(startingPic)
   const [current, setCurrent] = useState(0);
@@ -41,9 +47,19 @@ const PicturesGame = ({gameData}) => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
   const navigate = useNavigate();
+
   const openMainPage = () => {
     navigate('/')
   }
+
+  useEffect(() => {
+    gameData = gameInfo.slice((card - 1)*10, card*10 );
+    startingPic = Number(gameData[0].imageNum)
+    setNext(startingPic)
+    setCurrent(0)
+    dispatch({type: 'resetCount'})
+  }, [card])
+
 
   const correctAns = gameData[current].author;
 
@@ -74,11 +90,21 @@ const PicturesGame = ({gameData}) => {
       setCurrent(prev => prev + 1)
       setNext(prev => prev + 1)
     } else {
+      dispatch({type: 'changeActive', payload: false})
       dispatch({type: 'activeFinishPopup', payload: true})
     }
-    
   }
 
+    const openNextQuiz = () => {
+      //reset color of circles
+      let circlesArr = [...document.querySelectorAll('.circle')];
+      circlesArr.forEach(i => i.style.backgroundColor = '#c4c4c4');
+
+      const currentQuiz = localStorage.getItem('game-range');
+      localStorage.setItem('game-range', `${Number(currentQuiz) + 1}`);
+      setCard(Number(currentQuiz) + 1)
+      dispatch({type: 'activeFinishPopup', payload: false})
+    }
 
   return (
     <div className='outerContainer'>
@@ -100,7 +126,7 @@ const PicturesGame = ({gameData}) => {
         <div className={style.results}>{
           numbers.map(numb => (
             <div key={numb} 
-            className={style.circle}
+            className='circle'
             id={numb}></div>
           ))
           }</div>
@@ -119,7 +145,7 @@ const PicturesGame = ({gameData}) => {
 
           <Popup  active={state.active}>
                           <div className={state.isCorrect ? style.correct : style.wrong}></div>
-                          <img className={style.img} src={`../images/sizedImages/${gameData[current].imageNum}.jpg`}/>
+                          <img className={style.img} src={`../images/sizedImages/${gameData[current].imageNum}.jpg`} alt='big'/>
                           <p>{gameData[current].name}</p>
                           <p>{gameData[current].author}</p>
                           <p>{gameData[current].year}</p>
@@ -132,7 +158,7 @@ const PicturesGame = ({gameData}) => {
                           <div className={style.resultImg}></div>
                           <div className={style.btnsContainer}>
                             <MyButton icon={<BsHouseFill style={iconStyle}/>} handleBtnClick={openMainPage} btnStyles={styledBtn}>Home</MyButton>
-                            <MyButton>Next Quiz</MyButton>
+                            <MyButton handleBtnClick={openNextQuiz}>Next Quiz</MyButton>
                           </div>
           </Popup>
       </div>
