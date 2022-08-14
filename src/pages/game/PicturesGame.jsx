@@ -10,30 +10,8 @@ import MyButton from '../../UI/button/MyButton';
 import { audio, shuffleArray } from '../../utils/functions';
 import { styledBtn } from './../categories/Categories';
 import gameInfo from './../../images'
-
-const initialState = {
-  active: false, 
-  correctAnsCount: 0,
-  isCorrect: false,
-  activeFinishPopup: false
-};
-
-function reducer(state, action) {
-    switch (action.type) {
-      case 'changeActive' :
-        return {...state, active: action.payload};
-      case 'changeCount':
-        return {...state, correctAnsCount: state.correctAnsCount+1}  
-      case 'resetCount':
-        return {...state, correctAnsCount: 0}  
-      case 'changeIsCorrect':
-        return {...state, isCorrect: action.payload}  
-      case 'activeFinishPopup':
-        return {...state, activeFinishPopup: action.payload}  
-        default:
-          throw new Error();
-    }
-  }
+import { reducer, initialState } from '../../utils/state';
+import Timer from '../../components/timer/Timer';
 
 const PicturesGame = ({ cardNumber }) => {
   const [card, setCard] = useState(cardNumber)
@@ -114,11 +92,11 @@ const PicturesGame = ({ cardNumber }) => {
     <div className='outerContainer'>
       <div className={style.header}>
         <LogoImage width={'94px'} margin={'20px 0 15px 0'}/>
-        <div className={style.quizText}>Who is the author of this picture?</div>
+        <div className={style.quizText}>Кто автор этой картины?</div>
         <p>{initialState.active}</p>
         <div className={style.timerContainer}>
           <BsAlarmFill  className={style.timer}/>
-          <p>03:15</p>
+          <Timer initialMinute={2} initialSeconds={0}/>
         </div>
       </div>
       <div className={style.innerContainer}>

@@ -11,3 +11,5 @@ export function shuffleArray(answers) {
 
 export const audio = new Audio();
 audio.volume = 0.5
+
+

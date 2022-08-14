@@ -10,33 +10,10 @@ import MyButton from '../../UI/button/MyButton';
 import { audio, shuffleArray } from '../../utils/functions';
 import { styledBtn } from './../categories/Categories';
 import gameInfo from './../../images'
+import { reducer, initialState } from '../../utils/state';
+import Timer from '../../components/timer/Timer';
 
 const quizInfo = gameInfo.slice(100)
-
-const initialState = {
-  active: false, 
-  correctAnsCount: 0,
-  isCorrect: false,
-  activeFinishPopup: false
-};
-
-function reducer(state, action) {
-    switch (action.type) {
-      case 'changeActive' :
-        return {...state, active: action.payload};
-      case 'changeCount':
-        return {...state, correctAnsCount: state.correctAnsCount+1}  
-      case 'resetCount':
-        return {...state, correctAnsCount: 0}  
-      case 'changeIsCorrect':
-        return {...state, isCorrect: action.payload}  
-      case 'activeFinishPopup':
-        return {...state, activeFinishPopup: action.payload}  
-        default:
-          throw new Error();
-    }
-  }
-
 
 const ArtistGame = ({cardNumber}) => {
   const [card, setCard] = useState(cardNumber)
@@ -115,7 +92,7 @@ const ArtistGame = ({cardNumber}) => {
         <p>{initialState.active}</p>
         <div className={style.timerContainer}>
           <BsAlarmFill  className={style.timer}/>
-          <p>03:15</p>
+          <Timer initialMinute={2} initialSeconds={0}/>
         </div>
       </div>
       <div className={style.innerContainer}>
