@@ -1,9 +1,172 @@
-import React from 'react';
+import React, { useState, useReducer, useEffect} from 'react';
+import { useNavigate } from 'react-router-dom';
+import { BsHouseFill } from "react-icons/bs";
+import LogoImage from './../../UI/logo/LogoImage';
+import style from './Game.module.css'
+import {  BsAlarmFill } from "react-icons/bs";
+import { iconStyle, numbers } from '../categories/Categories';
+import Popup from '../../components/modals/Popup';
+import MyButton from '../../UI/button/MyButton';
+import { audio, shuffleArray } from '../../utils/functions';
+import { styledBtn } from './../categories/Categories';
+import gameInfo from './../../images'
 
-const ArtistGame = () => {
+const quizInfo = gameInfo.slice(100)
+
+const initialState = {
+  active: false, 
+  correctAnsCount: 0,
+  isCorrect: false,
+  activeFinishPopup: false
+};
+
+function reducer(state, action) {
+    switch (action.type) {
+      case 'changeActive' :
+        return {...state, active: action.payload};
+      case 'changeCount':
+        return {...state, correctAnsCount: state.correctAnsCount+1}  
+      case 'resetCount':
+        return {...state, correctAnsCount: 0}  
+      case 'changeIsCorrect':
+        return {...state, isCorrect: action.payload}  
+      case 'activeFinishPopup':
+        return {...state, activeFinishPopup: action.payload}  
+        default:
+          throw new Error();
+    }
+  }
+
+
+const ArtistGame = ({cardNumber}) => {
+  const [card, setCard] = useState(cardNumber)
+
+  let gameData = quizInfo.slice((card - 1)*10, card*10 )
+
+  const [current, setCurrent] = useState(0);
+
+  const [state, dispatch] = useReducer(reducer, initialState)
+
+  const correctAns = gameData[current].imageNum;
+
+  const wrongAnswers =  shuffleArray([...new Set(gameInfo.filter(item => item.imageNum !== correctAns).map(item => item.imageNum))]).slice(0, 3)
+
+  const gameAnswers =  shuffleArray([correctAns, ...wrongAnswers])
+
+  const navigate = useNavigate();
+
+  const openMainPage = () => {
+    navigate('/')
+  }
+
+  const checkAnswer = (answer) => {
+    if( answer === correctAns) {
+      audio.src = '../sounds/correct-answer-sound.mp3'
+      audio.play()
+      dispatch({type: 'changeCount'})
+      localStorage.setItem('correctAnswers', `${state.correctAnsCount}`)
+      dispatch({type: 'changeIsCorrect', payload: true})
+      dispatch({type: 'changeActive', payload: true})
+      document.getElementById(`${ current + 1}`).style.backgroundColor = '#006635'
+    }
+    else {
+      audio.src = '../sounds/incorrect-answer-sound.mp3'
+      audio.play()
+      dispatch({type: 'changeIsCorrect', payload: false})
+      dispatch({type: 'changeActive', payload: true})
+      document.getElementById(`${ current + 1}`).style.backgroundColor = 'var(--main-bg-color)'
+    }
+  }
+
+  const handlePopupBtnClick = () => {
+    const playingCard = localStorage.getItem('game-range');
+    localStorage.setItem(`artists-card${playingCard}-result`, `${state.correctAnsCount}`);
+    if (current < 9) {
+      dispatch({type: 'changeActive', payload: false})
+      setCurrent(prev => prev + 1)
+    } else {
+      dispatch({type: 'changeActive', payload: false})
+      dispatch({type: 'activeFinishPopup', payload: true})
+    }
+  }
+
+    const openNextQuiz = () => {
+      //reset color of circles
+      let circlesArr = [...document.querySelectorAll('.circle')];
+      circlesArr.forEach(i => i.style.backgroundColor = '#c4c4c4');
+
+      const currentQuiz = localStorage.getItem('game-range');
+      localStorage.setItem('game-range', `${Number(currentQuiz) + 1}`);
+      setCard(Number(currentQuiz) + 1)
+      dispatch({type: 'activeFinishPopup', payload: false})
+    }
+
+    useEffect(() => {
+      gameData = quizInfo.slice((card - 1)*10, card*10 );
+      setCurrent(0)
+      dispatch({type: 'resetCount'})
+    }, [card])
+
   return (
-    <div>
-      
+    <div className='outerContainer'>
+      <div className={style.header}>
+        <LogoImage width={'94px'} margin={'20px 0 15px 0'}/>
+        <div className={style.quizText}>Какую из этих картин написал {gameData[current].author}?</div>
+        <p>{initialState.active}</p>
+        <div className={style.timerContainer}>
+          <BsAlarmFill  className={style.timer}/>
+          <p>03:15</p>
+        </div>
+      </div>
+      <div className={style.innerContainer}>
+        <div style={{display: 'flex', flexWrap: 'wrap', gap: '10px'}}>
+          {gameAnswers.map(item => (
+            <img className={style.image}
+            key={item}
+                    src={`../images/full/${item}full.jpg`} 
+                    style={{width: '495px', height: '325px', objectFit: 'fill'}}
+                    alt='pic'/> 
+          ))}
+        </div>
+        <div className={style.results}>{
+          numbers.map(numb => (
+            <div key={numb} 
+            className='circle'
+            id={numb}></div>
+          ))
+          }</div>
+      </div>
+      <div className={style.answers}>
+        {gameAnswers.map((answer, i) => (
+          <div key={answer} 
+                className={style.answer}
+                onClick={() => checkAnswer(answer)}
+          >
+            {i+1}
+          </div>
+        ))}
+          <div className={style.vertical}></div>
+          <div className={style.horizontal}></div>
+
+          <Popup  active={state.active}>
+                          <div className={state.isCorrect ? style.correct : style.wrong}></div>
+                          <img className={style.img} src={`../images/sizedImages/${gameData[current].imageNum}.jpg`} alt='big'/>
+                          <p>{gameData[current].name}</p>
+                          <p>{gameData[current].author}</p>
+                          <p>{gameData[current].year}</p>
+                          <MyButton handleBtnClick={handlePopupBtnClick}>Next</MyButton>
+          </Popup>
+
+          <Popup  active={state.activeFinishPopup}>
+                          <p className={style.congrat}>CONGRATULATIONS !</p>
+                          <p className={style.result}>{state.correctAnsCount} / 10</p>
+                          <div className={style.resultImg}></div>
+                          <div className={style.btnsContainer}>
+                            <MyButton icon={<BsHouseFill style={iconStyle}/>} handleBtnClick={openMainPage} btnStyles={styledBtn}>Home</MyButton>
+                            <MyButton handleBtnClick={openNextQuiz}>Next Quiz</MyButton>
+                          </div>
+          </Popup>
+      </div>
     </div>
   );
 };
