@@ -15,10 +15,9 @@ import Timer from '../../components/timer/Timer';
 
 const PicturesGame = ({ cardNumber }) => {
   const [card, setCard] = useState(cardNumber)
-
+  
   let gameData = gameInfo.slice((card - 1)*10, card*10 )
   let startingPic = Number(gameData[0].imageNum)
-
   const [next, setNext] = useState(startingPic)
   const [current, setCurrent] = useState(0);
   const [state, dispatch] = useReducer(reducer, initialState)
@@ -41,6 +40,7 @@ const PicturesGame = ({ cardNumber }) => {
   const correctAns = gameData[current].author;
 
   const wrongAnswers = useMemo(() => {
+
     return shuffleArray([...new Set(gameData.filter(item => item.author !== correctAns).map(item => item.author))]).slice(0, 3)
   }, [correctAns]) 
 
@@ -145,8 +145,8 @@ const PicturesGame = ({ cardNumber }) => {
                           <p className={style.result}>{state.correctAnsCount} / 10</p>
                           <div className={style.resultImg}></div>
                           <div className={style.btnsContainer}>
-                            <MyButton icon={<BsHouseFill style={iconStyle}/>} handleBtnClick={openMainPage} btnStyles={styledBtn}>Home</MyButton>
-                            <MyButton handleBtnClick={openNextQuiz}>Next Quiz</MyButton>
+                            <MyButton icon={<BsHouseFill style={iconStyle}/>} handleBtnClick={openMainPage} btnStyles={styledBtn} style={{marginRight: '40px'}}>Home</MyButton>
+                            {card < 10 && <MyButton handleBtnClick={openNextQuiz}>Next Quiz</MyButton>}
                           </div>
           </Popup>
       </div>
