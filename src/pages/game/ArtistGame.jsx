@@ -1,4 +1,4 @@
-import React, { useState, useReducer, useEffect} from 'react';
+import React, { useState, useReducer, useEffect, useMemo} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BsHouseFill } from "react-icons/bs";
 import LogoImage from './../../UI/logo/LogoImage';
@@ -26,9 +26,13 @@ const ArtistGame = ({cardNumber}) => {
 
   const correctAns = gameData[current].imageNum;
 
-  const wrongAnswers =  shuffleArray([...new Set(gameInfo.filter(item => item.imageNum !== correctAns).map(item => item.imageNum))]).slice(0, 3)
+  const wrongAnswers = useMemo(() => {
+    return shuffleArray([...new Set(gameInfo.filter(item => item.imageNum !== correctAns).map(item => item.imageNum))]).slice(0, 3)
+  }, [correctAns]) 
 
-  const gameAnswers =  shuffleArray([correctAns, ...wrongAnswers])
+  const gameAnswers = useMemo(() => {
+    return shuffleArray([correctAns, ...wrongAnswers])
+  }, [correctAns, wrongAnswers]) 
 
   const navigate = useNavigate();
 
@@ -36,6 +40,10 @@ const ArtistGame = ({cardNumber}) => {
     navigate('/')
   }
 
+  const openFinishPopup = () => {
+      dispatch({type: 'changeActive', payload: false})
+      dispatch({type: 'activeFinishPopup', payload: true})
+  }
   const checkAnswer = (answer) => {
     if( answer === correctAns) {
       audio.src = '../sounds/correct-answer-sound.mp3'
@@ -92,7 +100,7 @@ const ArtistGame = ({cardNumber}) => {
         <p>{initialState.active}</p>
         <div className={style.timerContainer}>
           <BsAlarmFill  className={style.timer}/>
-          <Timer initialMinute={2} initialSeconds={0}/>
+          <Timer initialMinute={2} initialSeconds={0} openFinishPopup={openFinishPopup} card={card}/>
         </div>
       </div>
       <div className={style.innerContainer}>

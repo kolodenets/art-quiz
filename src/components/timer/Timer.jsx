@@ -1,10 +1,12 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 
+
 const Timer = (props) => {
-    const {initialMinute = 0,initialSeconds = 0} = props;
+    const {initialMinute = 0,initialSeconds = 0, openFinishPopup, card} = props;
     const [ minutes, setMinutes ] = useState(initialMinute);
     const [seconds, setSeconds ] =  useState(initialSeconds);
+
     useEffect(()=>{
     let myInterval = setInterval(() => {
             if (seconds > 0) {
@@ -12,7 +14,8 @@ const Timer = (props) => {
             }
             if (seconds === 0) {
                 if (minutes === 0) {
-                    clearInterval(myInterval)
+                  clearInterval(myInterval)
+                  openFinishPopup()
                 } else {
                     setMinutes(minutes - 1);
                     setSeconds(59);
@@ -22,8 +25,13 @@ const Timer = (props) => {
         return ()=> {
             clearInterval(myInterval);
           };
-    });
+    }, [card, minutes, openFinishPopup, seconds]);
 
+    useEffect(()=> {
+      setMinutes(2)
+      setSeconds(0)
+    }, [card])
+    
     return (
         <div>
         { minutes === 0 && seconds === 0

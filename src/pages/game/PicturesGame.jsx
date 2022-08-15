@@ -1,4 +1,4 @@
-import React, { useState, useReducer, useEffect} from 'react';
+import React, { useState, useReducer, useEffect, useMemo} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BsHouseFill } from "react-icons/bs";
 import LogoImage from './../../UI/logo/LogoImage';
@@ -21,7 +21,6 @@ const PicturesGame = ({ cardNumber }) => {
 
   const [next, setNext] = useState(startingPic)
   const [current, setCurrent] = useState(0);
-
   const [state, dispatch] = useReducer(reducer, initialState)
 
   const navigate = useNavigate();
@@ -41,10 +40,18 @@ const PicturesGame = ({ cardNumber }) => {
 
   const correctAns = gameData[current].author;
 
-  const wrongAnswers =  shuffleArray([...new Set(gameData.filter(item => item.author !== correctAns).map(item => item.author))]).slice(0, 3)
+  const wrongAnswers = useMemo(() => {
+    return shuffleArray([...new Set(gameData.filter(item => item.author !== correctAns).map(item => item.author))]).slice(0, 3)
+  }, [correctAns]) 
 
-  const gameAnswers =  shuffleArray([correctAns, ...wrongAnswers])
+  const gameAnswers = useMemo(() => {
+    return shuffleArray([correctAns, ...wrongAnswers])
+  }, [correctAns, wrongAnswers]) 
 
+  const openFinishPopup = () => {
+      dispatch({type: 'changeActive', payload: false})
+      dispatch({type: 'activeFinishPopup', payload: true})
+  }
   const checkAnswer = (answer) => {
     if( answer === correctAns) {
       audio.src = '../sounds/correct-answer-sound.mp3'
@@ -72,8 +79,7 @@ const PicturesGame = ({ cardNumber }) => {
       setCurrent(prev => prev + 1)
       setNext(prev => prev + 1)
     } else {
-      dispatch({type: 'changeActive', payload: false})
-      dispatch({type: 'activeFinishPopup', payload: true})
+      openFinishPopup()
     }
   }
 
@@ -96,7 +102,7 @@ const PicturesGame = ({ cardNumber }) => {
         <p>{initialState.active}</p>
         <div className={style.timerContainer}>
           <BsAlarmFill  className={style.timer}/>
-          <Timer initialMinute={2} initialSeconds={0}/>
+          <Timer initialMinute={2} initialSeconds={0} openFinishPopup={openFinishPopup} card={card}/>
         </div>
       </div>
       <div className={style.innerContainer}>

@@ -18,6 +18,6 @@ export function reducer(state, action) {
       case 'activeFinishPopup':
         return {...state, activeFinishPopup: action.payload}  
         default:
-          throw new Error();
+          return state;
     }
   }
