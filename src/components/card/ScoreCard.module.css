@@ -1,0 +1,38 @@
+
+.container {
+  flex-direction: column;
+  width: 184px;
+  height: 234px;
+  background-color: white;
+}
+
+.result {
+  width: 30.1px;
+  height: 30.1px;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin: 6px auto;
+}
+
+.correct {
+  background: url('./../../../public/images/right-answer.png');
+}
+
+.wrong {
+  background: url('./../../../public/images/wrong-answer.png');
+}
+
+.imageContainer {
+  display: flex;
+  width: 184px;
+  height: 184px;
+}
+
+.imageContainer img {
+  object-fit: contain;
+}
+
+.grayscale {
+  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%); 
+  }

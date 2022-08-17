@@ -18,7 +18,7 @@ export const styledBtn = {
   lineHeight: '22px',
   textTransform: 'upperCase',
   display: 'flex',
-  padding: '7px 18px 7px 7px',
+  padding: '7px 7px 7px 7px',
   alignItems: 'center',
   justifyContent: 'space-between',
 }
@@ -50,7 +50,6 @@ const Categories = () => {
       </div>
       <div className={styles.itemsContainer}>
         {numbers.map(item => <Card key={item} number={item} imgNumber={item} game={game}/>)}
-        
       </div>
     </div>
   );

@@ -8,6 +8,7 @@ const btnStyle = {backgroundColor: 'var(--main-bg-color)',
                   fontSize: '18px', 
                   lineHeight: '22px',
                   textTransform: 'upperCase',
+                  margin: '0 0 0 40px'
                   }
 
 const MyButton = ({handleBtnClick, children, icon, btnStyles}) => {

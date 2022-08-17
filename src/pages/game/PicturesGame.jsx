@@ -1,6 +1,7 @@
 import React, { useState, useReducer, useEffect, useMemo} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BsHouseFill } from "react-icons/bs";
+
 import LogoImage from './../../UI/logo/LogoImage';
 import style from './Game.module.css'
 import {  BsAlarmFill } from "react-icons/bs";
@@ -23,24 +24,13 @@ const PicturesGame = ({ cardNumber }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
   const navigate = useNavigate();
-
   const openMainPage = () => {
     navigate('/')
   }
 
-  useEffect(() => {
-    gameData = gameInfo.slice((card - 1)*10, card*10 );
-    startingPic = Number(gameData[0].imageNum)
-    setNext(startingPic)
-    setCurrent(0)
-    dispatch({type: 'resetCount'})
-  }, [card])
-
-
   const correctAns = gameData[current].author;
 
   const wrongAnswers = useMemo(() => {
-
     return shuffleArray([...new Set(gameData.filter(item => item.author !== correctAns).map(item => item.author))]).slice(0, 3)
   }, [correctAns]) 
 
@@ -52,12 +42,17 @@ const PicturesGame = ({ cardNumber }) => {
       dispatch({type: 'changeActive', payload: false})
       dispatch({type: 'activeFinishPopup', payload: true})
   }
+
   const checkAnswer = (answer) => {
     if( answer === correctAns) {
       audio.src = '../sounds/correct-answer-sound.mp3'
       audio.play()
       dispatch({type: 'changeCount'})
       localStorage.setItem('correctAnswers', `${state.correctAnsCount}`)
+
+      //set score image result
+      localStorage.setItem(`score-card-${gameData[current].imageNum}`, 'yes')
+
       dispatch({type: 'changeIsCorrect', payload: true})
       dispatch({type: 'changeActive', payload: true})
       document.getElementById(`${ current + 1}`).style.backgroundColor = '#006635'
@@ -68,6 +63,7 @@ const PicturesGame = ({ cardNumber }) => {
       dispatch({type: 'changeIsCorrect', payload: false})
       dispatch({type: 'changeActive', payload: true})
       document.getElementById(`${ current + 1}`).style.backgroundColor = 'var(--main-bg-color)'
+      localStorage.setItem(`score-card-${gameData[current].imageNum}`, 'no')
     }
   }
 
@@ -93,6 +89,16 @@ const PicturesGame = ({ cardNumber }) => {
       setCard(Number(currentQuiz) + 1)
       dispatch({type: 'activeFinishPopup', payload: false})
     }
+    // check is timer on
+    const isTimer = localStorage.getItem('timer') === 'true' ? true : false
+
+    useEffect(() => {
+      gameData = gameInfo.slice((card - 1)*10, card*10 );
+      startingPic = Number(gameData[0].imageNum)
+      setNext(startingPic)
+      setCurrent(0)
+      dispatch({type: 'resetCount'})
+    }, [card])
 
   return (
     <div className='outerContainer'>
@@ -100,10 +106,10 @@ const PicturesGame = ({ cardNumber }) => {
         <LogoImage width={'94px'} margin={'20px 0 15px 0'}/>
         <div className={style.quizText}>Кто автор этой картины?</div>
         <p>{initialState.active}</p>
-        <div className={style.timerContainer}>
+        {isTimer && <div className={style.timerContainer}>
           <BsAlarmFill  className={style.timer}/>
           <Timer initialMinute={2} initialSeconds={0} openFinishPopup={openFinishPopup} card={card}/>
-        </div>
+        </div>}
       </div>
       <div className={style.innerContainer}>
         <img className={style.image}
@@ -145,7 +151,7 @@ const PicturesGame = ({ cardNumber }) => {
                           <p className={style.result}>{state.correctAnsCount} / 10</p>
                           <div className={style.resultImg}></div>
                           <div className={style.btnsContainer}>
-                            <MyButton icon={<BsHouseFill style={iconStyle}/>} handleBtnClick={openMainPage} btnStyles={styledBtn} style={{marginRight: '40px'}}>Home</MyButton>
+                            <MyButton icon={<BsHouseFill style={iconStyle}/>} handleBtnClick={openMainPage} btnStyles={styledBtn}>Home</MyButton>
                             {card < 10 && <MyButton handleBtnClick={openNextQuiz}>Next Quiz</MyButton>}
                           </div>
           </Popup>

@@ -1,6 +1,7 @@
 import React, { useState, useReducer, useEffect, useMemo} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BsHouseFill } from "react-icons/bs";
+
 import LogoImage from './../../UI/logo/LogoImage';
 import style from './Game.module.css'
 import {  BsAlarmFill } from "react-icons/bs";
@@ -17,13 +18,15 @@ const quizInfo = gameInfo.slice(100)
 
 const ArtistGame = ({cardNumber}) => {
   const [card, setCard] = useState(cardNumber)
-
   let gameData = quizInfo.slice((card - 1)*10, card*10 )
-
   const [current, setCurrent] = useState(0);
-
   const [state, dispatch] = useReducer(reducer, initialState)
 
+  const navigate = useNavigate();
+  const openMainPage = () => {
+    navigate('/')
+  }
+  
   const correctAns = gameData[current].imageNum;
 
   const wrongAnswers = useMemo(() => {
@@ -34,22 +37,21 @@ const ArtistGame = ({cardNumber}) => {
     return shuffleArray([correctAns, ...wrongAnswers])
   }, [correctAns, wrongAnswers]) 
 
-  const navigate = useNavigate();
-
-  const openMainPage = () => {
-    navigate('/')
-  }
-
   const openFinishPopup = () => {
       dispatch({type: 'changeActive', payload: false})
       dispatch({type: 'activeFinishPopup', payload: true})
   }
+
   const checkAnswer = (answer) => {
     if( answer === correctAns) {
       audio.src = '../sounds/correct-answer-sound.mp3'
       audio.play()
       dispatch({type: 'changeCount'})
       localStorage.setItem('correctAnswers', `${state.correctAnsCount}`)
+
+      //set score image result
+      localStorage.setItem(`score-card-${gameData[current].imageNum}`, 'yes')
+
       dispatch({type: 'changeIsCorrect', payload: true})
       dispatch({type: 'changeActive', payload: true})
       document.getElementById(`${ current + 1}`).style.backgroundColor = '#006635'
@@ -86,6 +88,9 @@ const ArtistGame = ({cardNumber}) => {
       dispatch({type: 'activeFinishPopup', payload: false})
     }
 
+    // check is timer on
+    const isTimer = localStorage.getItem('timer') === 'true' ? true : false;
+
     useEffect(() => {
       gameData = quizInfo.slice((card - 1)*10, card*10 );
       setCurrent(0)
@@ -98,10 +103,10 @@ const ArtistGame = ({cardNumber}) => {
         <LogoImage width={'94px'} margin={'20px 0 15px 0'}/>
         <div className={style.quizText}>Какую из этих картин написал {gameData[current].author}?</div>
         <p>{initialState.active}</p>
-        <div className={style.timerContainer}>
+        {isTimer && <div className={style.timerContainer}>
           <BsAlarmFill  className={style.timer}/>
           <Timer initialMinute={2} initialSeconds={0} openFinishPopup={openFinishPopup} card={card}/>
-        </div>
+        </div>}
       </div>
       <div className={style.innerContainer}>
         <div style={{display: 'flex', flexWrap: 'wrap', gap: '10px'}}>
@@ -147,8 +152,8 @@ const ArtistGame = ({cardNumber}) => {
                           <p className={style.result}>{state.correctAnsCount} / 10</p>
                           <div className={style.resultImg}></div>
                           <div className={style.btnsContainer}>
-                            <MyButton icon={<BsHouseFill style={iconStyle}/>} handleBtnClick={openMainPage} btnStyles={styledBtn}>Home</MyButton>
-                            <MyButton handleBtnClick={openNextQuiz}>Next Quiz</MyButton>
+                            <MyButton icon={<BsHouseFill style={iconStyle}/>} handleBtnClick={openMainPage} btnStyles={styledBtn} style={{margin: '0 40px 0 0'}}>Home</MyButton>
+                            {card < 10 && <MyButton handleBtnClick={openNextQuiz}>Next Quiz</MyButton>}
                           </div>
           </Popup>
       </div>
