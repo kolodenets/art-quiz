@@ -24,10 +24,15 @@
   text-transform: uppercase;
   color: #660033;
 }
-
 .timerContainer {
+  width: 155px;
+  height: 60px;
+}
+
+.timerInnerContainer {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   font-family: 'Montserrat';
   font-style: normal;
   font-weight: 400;
@@ -51,8 +56,22 @@
   left: 335px;
 }
 
+
+@keyframes arise {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 .image {
   object-fit: contain;
+}
+
+.animated {
+  animation: arise 1s;
 }
 
 .answers {
@@ -162,4 +181,44 @@
   padding: '4px 6px';
   align-items: 'center';
   justify-content: 'space-between';
+}
+
+.imgContainer {
+  display: flex;
+  position: relative;
+  flex-wrap:wrap;
+  gap: 10px;
+}
+.imgContainer img {
+  position: relative;
+}
+
+@keyframes fromLeft {
+  0% {
+    opacity: 0;
+    left: -100px;
+  }
+  100% {
+    opacity: 1;
+    left: 0;
+  }
+}
+@keyframes fromRight {
+  0% {
+    opacity: 0;
+    right: -100px;
+  }
+  100% {
+    opacity: 1;
+    right: 0;
+  }
+}
+
+.imgContainer img:nth-child(1), 
+.imgContainer img:nth-child(3) {
+  animation: fromLeft 1s;
+}
+.imgContainer img:nth-child(2), 
+.imgContainer img:nth-child(4) {
+  animation: fromRight 1s;
 }

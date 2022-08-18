@@ -13,10 +13,11 @@ import { styledBtn } from './../categories/Categories';
 import gameInfo from './../../images'
 import { reducer, initialState } from '../../utils/state';
 import Timer from '../../components/timer/Timer';
+import { useRef } from 'react';
 
 const PicturesGame = ({ cardNumber }) => {
   const [card, setCard] = useState(cardNumber)
-  
+  const imageRef = useRef()
   let gameData = gameInfo.slice((card - 1)*10, card*10 )
   let startingPic = Number(gameData[0].imageNum)
   const [next, setNext] = useState(startingPic)
@@ -44,6 +45,11 @@ const PicturesGame = ({ cardNumber }) => {
   }
 
   const checkAnswer = (answer) => {
+    console.log(document.getElementById('image').classList)
+    // delete animation from image
+    imageRef.current.classList = style.image
+    
+    console.log(document.getElementById('image').classList)
     if( answer === correctAns) {
       audio.src = '../sounds/correct-answer-sound.mp3'
       audio.play()
@@ -71,6 +77,9 @@ const PicturesGame = ({ cardNumber }) => {
     const playingCard = localStorage.getItem('game-range');
     localStorage.setItem(`pictures-card${playingCard}-result`, `${state.correctAnsCount}`);
     if (current < 9) {
+      // add animation to image
+      imageRef.current.classList = `${style.image} ${style.animated}` 
+
       dispatch({type: 'changeActive', payload: false})
       setCurrent(prev => prev + 1)
       setNext(prev => prev + 1)
@@ -98,6 +107,9 @@ const PicturesGame = ({ cardNumber }) => {
       setNext(startingPic)
       setCurrent(0)
       dispatch({type: 'resetCount'})
+      
+      // add animation to image
+      imageRef.current.classList = `${style.image} ${style.animated}` 
     }, [card])
 
   return (
@@ -105,18 +117,21 @@ const PicturesGame = ({ cardNumber }) => {
       <div className={style.header}>
         <LogoImage width={'94px'} margin={'20px 0 15px 0'}/>
         <div className={style.quizText}>Кто автор этой картины?</div>
-        <p>{initialState.active}</p>
-        {isTimer && <div className={style.timerContainer}>
+        <div className={style.timerContainer}>
+          {isTimer && <div className={style.timerInnerContainer}>
           <BsAlarmFill  className={style.timer}/>
           <Timer initialMinute={2} initialSeconds={0} openFinishPopup={openFinishPopup} card={card}/>
         </div>}
+        </div>
+        
       </div>
       <div className={style.innerContainer}>
-        <img className={style.image}
+        <img className={[style.image, style.animated].join(' ')}
+        id='image'
         src={`../images/full/${next}full.jpg`} 
         style={{width: '1000px', height: '650px'}}
         alt='pic'
-        /> 
+        ref={imageRef}/> 
         <div className={style.results}>{
           numbers.map(numb => (
             <div key={numb} 

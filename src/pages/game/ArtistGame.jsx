@@ -26,7 +26,7 @@ const ArtistGame = ({cardNumber}) => {
   const openMainPage = () => {
     navigate('/')
   }
-  
+
   const correctAns = gameData[current].imageNum;
 
   const wrongAnswers = useMemo(() => {
@@ -102,14 +102,15 @@ const ArtistGame = ({cardNumber}) => {
       <div className={style.header}>
         <LogoImage width={'94px'} margin={'20px 0 15px 0'}/>
         <div className={style.quizText}>Какую из этих картин написал {gameData[current].author}?</div>
-        <p>{initialState.active}</p>
-        {isTimer && <div className={style.timerContainer}>
+        <div className={style.timerContainer}>
+          {isTimer && <div className={style.timerInnerContainer}>
           <BsAlarmFill  className={style.timer}/>
           <Timer initialMinute={2} initialSeconds={0} openFinishPopup={openFinishPopup} card={card}/>
         </div>}
+        </div>
       </div>
       <div className={style.innerContainer}>
-        <div style={{display: 'flex', flexWrap: 'wrap', gap: '10px'}}>
+        <div className={style.imgContainer}>
           {gameAnswers.map(item => (
             <img className={style.image}
             key={item}
