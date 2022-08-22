@@ -4,22 +4,27 @@
   width: 184px;
   height: 234px;
   background-color: white;
+  position: relative;
+  cursor: pointer;
+  overflow-y: hidden;
 }
 
 .result {
   width: 30.1px;
   height: 30.1px;
   background-position: center;
-  background-repeat: no-repeat;
+
   margin: 6px auto;
 }
 
 .correct {
   background: url('./../../../public/images/right-answer.png');
+  background-repeat: no-repeat;
 }
 
 .wrong {
   background: url('./../../../public/images/wrong-answer.png');
+  background-repeat: no-repeat;
 }
 
 .imageContainer {
@@ -36,3 +41,54 @@
   filter: grayscale(100%);
   -webkit-filter: grayscale(100%); 
   }
+
+.info {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: 184px;
+  height: 131px;
+  top: 300px;
+  background-color: rgba(255, 255, 255, 0.75);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--main-bg-color);
+}
+
+.picName {
+  margin: 6px 6px;
+  height: 100%;
+}
+@keyframes fromBottom {
+  0% {
+    opacity: 0;
+    top: 300px;
+  }
+  100% {
+    opacity: 1;
+    top: 95;
+  }
+}
+@keyframes toBottom {
+  0% {
+    opacity: 1;
+    top: 95px;
+  }
+  100% {
+    opacity: 0;
+    top: 300px;
+  }
+}
+.innerInfo {
+  padding-bottom: 2px;
+}
+.opened {
+  top: 95px;
+  animation: fromBottom 1s;
+}
+.closed {
+  animation: toBottom 1s;
+}
