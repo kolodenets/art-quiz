@@ -2,7 +2,8 @@ export const initialState = {
   active: false, 
   correctAnsCount: 0,
   isCorrect: false,
-  activeFinishPopup: false
+  activeFinishPopup: false,
+  activeFinalPopup: false
 };
 
 export function reducer(state, action) {
@@ -17,6 +18,8 @@ export function reducer(state, action) {
         return {...state, isCorrect: action.payload}  
       case 'activeFinishPopup':
         return {...state, activeFinishPopup: action.payload}  
+      case 'activeFinalPopup':
+        return {...state, activeFinalPopup: action.payload}  
         default:
           return state;
     }

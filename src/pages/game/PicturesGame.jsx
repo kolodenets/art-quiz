@@ -8,7 +8,7 @@ import {  BsAlarmFill } from "react-icons/bs";
 import { iconStyle, numbers } from '../categories/Categories';
 import Popup from '../../components/modals/Popup';
 import MyButton from '../../UI/button/MyButton';
-import { audio, shuffleArray } from '../../utils/functions';
+import { audio, shuffleArray, finalResult } from '../../utils/functions';
 import { styledBtn } from './../categories/Categories';
 import gameInfo from './../../images'
 import { reducer, initialState } from '../../utils/state';
@@ -45,11 +45,9 @@ const PicturesGame = ({ cardNumber }) => {
   }
 
   const checkAnswer = (answer) => {
-    console.log(document.getElementById('image').classList)
     // delete animation from image
     imageRef.current.classList = style.image
     
-    console.log(document.getElementById('image').classList)
     if( answer === correctAns) {
       audio.src = '../sounds/correct-answer-sound.mp3'
       audio.play()
@@ -73,6 +71,11 @@ const PicturesGame = ({ cardNumber }) => {
     }
   }
 
+  const openFinalResult = () => {
+    dispatch({type: 'changeActive', payload: false})
+    dispatch({type: 'activeFinalPopup', payload: true})
+  }
+
   const handlePopupBtnClick = () => {
     const playingCard = localStorage.getItem('game-range');
     localStorage.setItem(`pictures-card${playingCard}-result`, `${state.correctAnsCount}`);
@@ -84,7 +87,12 @@ const PicturesGame = ({ cardNumber }) => {
       setCurrent(prev => prev + 1)
       setNext(prev => prev + 1)
     } else {
-      openFinishPopup()
+      if (finalResult('pictures') === 100) {
+        openFinalResult()
+      }
+      else {
+        openFinishPopup()
+      }
     }
   }
 
@@ -160,7 +168,6 @@ const PicturesGame = ({ cardNumber }) => {
                           <p>{gameData[current].year}</p>
                           <MyButton handleBtnClick={handlePopupBtnClick}>Next</MyButton>
           </Popup>
-
           <Popup  active={state.activeFinishPopup}>
                           <p className={style.congrat}>CONGRATULATIONS !</p>
                           <p className={style.result}>{state.correctAnsCount} / 10</p>
@@ -169,6 +176,13 @@ const PicturesGame = ({ cardNumber }) => {
                             <MyButton icon={<BsHouseFill style={iconStyle}/>} handleBtnClick={openMainPage} btnStyles={styledBtn}>Home</MyButton>
                             {card < 10 && <MyButton handleBtnClick={openNextQuiz}>Next Quiz</MyButton>}
                           </div>
+          </Popup>
+          <Popup active={state.activeFinalPopup}>
+            <div className={style.finalPopup}>
+              <div style={{marginBottom: '80px'}}>
+                <MyButton icon={<BsHouseFill style={iconStyle}/>} handleBtnClick={openMainPage} btnStyles={styledBtn}>Home</MyButton>
+              </div>
+            </div>
           </Popup>
       </div>
     </div>

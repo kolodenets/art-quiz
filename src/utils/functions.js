@@ -13,3 +13,10 @@ export const audio = new Audio();
 audio.volume = 0.5
 
 
+export const finalResult = (game) => {
+  let ar = [];
+  for (let i = 1; i < 11; i++) {
+    ar.push(+localStorage.getItem(`${game}-card${i}-result`))
+  }
+  return ar.reduce((a,b) => a + b, 0)
+};

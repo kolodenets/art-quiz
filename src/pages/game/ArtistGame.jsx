@@ -8,7 +8,7 @@ import {  BsAlarmFill } from "react-icons/bs";
 import { iconStyle, numbers } from '../categories/Categories';
 import Popup from '../../components/modals/Popup';
 import MyButton from '../../UI/button/MyButton';
-import { audio, shuffleArray } from '../../utils/functions';
+import { audio, shuffleArray, finalResult } from '../../utils/functions';
 import { styledBtn } from './../categories/Categories';
 import gameInfo from './../../images'
 import { reducer, initialState } from '../../utils/state';
@@ -65,6 +65,11 @@ const ArtistGame = ({cardNumber}) => {
     }
   }
 
+  const openFinalResult = () => {
+    dispatch({type: 'changeActive', payload: false})
+    dispatch({type: 'activeFinalPopup', payload: true})
+  }
+
   const handlePopupBtnClick = () => {
     const playingCard = localStorage.getItem('game-range');
     localStorage.setItem(`artists-card${playingCard}-result`, `${state.correctAnsCount}`);
@@ -72,8 +77,12 @@ const ArtistGame = ({cardNumber}) => {
       dispatch({type: 'changeActive', payload: false})
       setCurrent(prev => prev + 1)
     } else {
-      dispatch({type: 'changeActive', payload: false})
-      dispatch({type: 'activeFinishPopup', payload: true})
+      if (finalResult('artists') === 100) {
+        openFinalResult()
+      }
+      else {
+        openFinishPopup()
+      }
     }
   }
 
@@ -156,6 +165,13 @@ const ArtistGame = ({cardNumber}) => {
                             <MyButton icon={<BsHouseFill style={iconStyle}/>} handleBtnClick={openMainPage} btnStyles={styledBtn} style={{margin: '0 40px 0 0'}}>Home</MyButton>
                             {card < 10 && <MyButton handleBtnClick={openNextQuiz}>Next Quiz</MyButton>}
                           </div>
+          </Popup>
+          <Popup active={state.activeFinalPopup}>
+            <div className={style.finalPopup}>
+              <div style={{marginBottom: '80px'}}>
+                <MyButton icon={<BsHouseFill style={iconStyle}/>} handleBtnClick={openMainPage} btnStyles={styledBtn}>Home</MyButton>
+              </div>
+            </div>
           </Popup>
       </div>
     </div>
