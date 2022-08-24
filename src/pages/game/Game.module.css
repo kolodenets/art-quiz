@@ -7,9 +7,13 @@
 
 .innerContainer {
   display: flex;
+  flex-direction:column;
   width: 1000px;
-  justify-content: space-between;
-  position: relative;
+}
+.innerContainerArt {
+  display: flex;
+  flex-direction:column;
+  width: 584px;
 }
 
 .quizText {
@@ -50,10 +54,7 @@
   display: flex;
   width: 330px;
   justify-content: space-between;
-  position: relative;
-  position: absolute;
-  top: 592px;
-  left: 335px;
+  margin: 20px auto;
 }
 
 
@@ -68,6 +69,11 @@
 
 .image {
   object-fit: contain;
+  height: 560px;
+}
+.artistQuizImage {
+  height: 287px;
+  object-fit: cover;
 }
 
 .animated {

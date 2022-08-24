@@ -137,7 +137,6 @@ const PicturesGame = ({ cardNumber }) => {
         <img className={[style.image, style.animated].join(' ')}
         id='image'
         src={`../images/full/${next}full.jpg`} 
-        style={{width: '1000px', height: '650px'}}
         alt='pic'
         ref={imageRef}/> 
         <div className={style.results}>{

@@ -118,13 +118,12 @@ const ArtistGame = ({cardNumber}) => {
         </div>}
         </div>
       </div>
-      <div className={style.innerContainer}>
+      <div className={style.innerContainerArt}>
         <div className={style.imgContainer}>
           {gameAnswers.map(item => (
-            <img className={style.image}
+            <img className={style.artistQuizImage}
             key={item}
-                    src={`../images/full/${item}full.jpg`} 
-                    style={{width: '495px', height: '325px', objectFit: 'fill'}}
+                    src={`../images/sizedImages/${item}.jpg`} 
                     alt='pic'/> 
           ))}
         </div>
