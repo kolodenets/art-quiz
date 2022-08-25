@@ -8,6 +8,7 @@ import {SettingOutlined} from '@ant-design/icons'
 const artistImg = '../artists-quiz.png'
 const picturesImg = '../pictures-quiz.png'
 const iconStyle = { fontSize: '42px', height: '42px'}
+
 export const styledBtn = {
   backgroundColor: 'var(--main-bg-color)',
   outline: 'none', 
@@ -40,11 +41,11 @@ const MainPage = () => {
       <div className={styles.innerContainer}>
         <div onClick={() => openQuizCategories('artists')} className={styles.quizSelect}>
           <img className={styles.quizImg} src={artistImg}  alt="artist" />
-          <p className={styles.quizTitle}><span style={{fontWeight: '700'}}>Artist </span>quiz</p>
+          <div className={styles.quizTitle}><span style={{fontWeight: '700'}}>Artist </span>quiz</div>
         </div>
         <div onClick={() => openQuizCategories('pictures')} className={styles.quizSelect}>
           <img className={styles.quizImg} src={picturesImg}  alt="pictures" />
-          <p className={styles.quizTitle} style={{marginTop: '-4px'}}><span style={{fontWeight: '700'}}>Pictures </span>quiz</p>
+          <div className={styles.quizTitle} style={{marginTop: '-4px'}}><span style={{fontWeight: '700'}}>Pictures </span>quiz</div>
         </div>
       </div>
       <MyButton icon={<SettingOutlined style={iconStyle}/>} handleBtnClick={handleBtnClick} btnStyles={styledBtn}>SETTINGS</MyButton>

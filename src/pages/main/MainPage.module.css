@@ -24,3 +24,54 @@
   padding-right: 17px;
   color: #660033;
 }
+
+@media screen and (min-width: 768px) and (max-width:1024px){
+  .innerContainer {
+    flex-direction: column;
+    width: 500px;
+    height: 680px;
+    gap: 40px;
+  }
+  .quizSelect {
+    position: relative;
+    width: 500px;
+    height: 320px;
+    overflow-y: hidden;
+  }
+  .quizImg {
+    width: 520px;
+  }
+  .quizTitle {
+    position: absolute;
+    width: 454px;
+    left: 24px;
+    top: 270px;
+    background-color: rgba(255, 255, 255, 0.75);
+  }
+}
+
+@media screen and (min-width: 360px) and (max-width: 767.98px){
+  .innerContainer {
+    flex-direction: column;
+    width: 330px;
+    height: 440px;
+    gap: 14px;
+  }
+  .quizSelect {
+    position: relative;
+    width: 330px;
+    height: 213px;
+    overflow-y: hidden;
+  }
+  .quizImg {
+    width: 340px;
+  }
+  .quizTitle {
+    position: absolute;
+    width: 297px;
+    left: 19px;
+    top: 167px;
+    background-color: rgba(255, 255, 255, 0.75);
+    padding-right: 0;
+  }
+}

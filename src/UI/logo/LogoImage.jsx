@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import style from './LogoImage.module.css'
 
 const logo = '../logo.png'
 
@@ -13,7 +14,7 @@ const LogoImage = ({width, margin}) => {
       <img
       style={{width: `${width}`, margin: `${margin}`}} 
       onClick={openMainPage} 
-      className='mainLogo' 
+      className={style.mainLogo} 
       src={logo} 
       alt="logo" />
     </>
