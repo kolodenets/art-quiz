@@ -220,12 +220,12 @@
   }
 }
 
-.imgContainer img:nth-child(1), 
-.imgContainer img:nth-child(3) {
+.imgContainer div:nth-child(1), 
+.imgContainer div:nth-child(3) {
   animation: fromLeft 1s;
 }
-.imgContainer img:nth-child(2), 
-.imgContainer img:nth-child(4) {
+.imgContainer div:nth-child(2), 
+.imgContainer div:nth-child(4) {
   animation: fromRight 1s;
 }
 
@@ -236,4 +236,15 @@
   justify-content: center;
   align-items: flex-end;
   background-image: url('./../../../public/images/grandResult.png');
+}
+
+.circles {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: #fff;
+  border-radius: 50%;
+  top: 264px;
+  left: 264px;
+  text-align: center;
 }

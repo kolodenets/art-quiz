@@ -13,6 +13,7 @@ import { styledBtn } from './../categories/Categories';
 import gameInfo from './../../images'
 import { reducer, initialState } from '../../utils/state';
 import Timer from '../../components/timer/Timer';
+import { btnStyle } from '../../utils/variables';
 
 const quizInfo = gameInfo.slice(100)
 
@@ -106,6 +107,8 @@ const ArtistGame = ({cardNumber}) => {
       dispatch({type: 'resetCount'})
     }, [card])
 
+    const btnStyleWithMargin = {...btnStyle, ...{marginLeft: '40px'}}
+
   return (
     <div className='outerContainer'>
       <div className={style.header}>
@@ -120,11 +123,13 @@ const ArtistGame = ({cardNumber}) => {
       </div>
       <div className={style.innerContainerArt}>
         <div className={style.imgContainer}>
-          {gameAnswers.map(item => (
-            <img className={style.artistQuizImage}
-            key={item}
+          {gameAnswers.map((item,i) => (
+            <div key={item} style={{position: 'relative'}}>
+              <img className={style.artistQuizImage}
                     src={`../images/sizedImages/${item}.jpg`} 
                     alt='pic'/> 
+              <div className={style.circles}><p>{i + 1}</p></div>
+            </div>
           ))}
         </div>
         <div className={style.results}>{
@@ -162,7 +167,7 @@ const ArtistGame = ({cardNumber}) => {
                           <div className={style.resultImg}></div>
                           <div className={style.btnsContainer}>
                             <MyButton icon={<BsHouseFill style={iconStyle}/>} handleBtnClick={openMainPage} btnStyles={styledBtn} style={{margin: '0 40px 0 0'}}>Home</MyButton>
-                            {card < 10 && <MyButton handleBtnClick={openNextQuiz}>Next Quiz</MyButton>}
+                            {card < 10 && <MyButton handleBtnClick={openNextQuiz} btnStyles={btnStyleWithMargin}>Next Quiz</MyButton>}
                           </div>
           </Popup>
           <Popup active={state.activeFinalPopup}>

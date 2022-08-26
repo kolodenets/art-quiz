@@ -14,6 +14,7 @@ import gameInfo from './../../images'
 import { reducer, initialState } from '../../utils/state';
 import Timer from '../../components/timer/Timer';
 import { useRef } from 'react';
+import { btnStyle } from '../../utils/variables';
 
 const PicturesGame = ({ cardNumber }) => {
   const [card, setCard] = useState(cardNumber)
@@ -112,6 +113,8 @@ const PicturesGame = ({ cardNumber }) => {
       dispatch({type: 'resetCount'})
     }, [card])
 
+    const btnStyleWithMargin = {...btnStyle, ...{marginLeft: '40px'}}
+
   return (
     <div className='outerContainer'>
       <div className={style.header}>
@@ -126,7 +129,7 @@ const PicturesGame = ({ cardNumber }) => {
         
       </div>
       <div className={style.innerContainer}>
-        <img className={[style.image, style.animated].join(' ')}
+        <img className={style.image}
         id='image'
         src={`../images/full/${next}full.jpg`} 
         alt='pic'
@@ -165,7 +168,7 @@ const PicturesGame = ({ cardNumber }) => {
                           <div className={style.resultImg}></div>
                           <div className={style.btnsContainer}>
                             <MyButton icon={<BsHouseFill style={iconStyle}/>} handleBtnClick={openMainPage} btnStyles={styledBtn}>Home</MyButton>
-                            {card < 10 && <MyButton handleBtnClick={openNextQuiz}>Next Quiz</MyButton>}
+                            {card < 10 && <MyButton handleBtnClick={openNextQuiz} btnStyles={btnStyleWithMargin}>Next Quiz</MyButton>}
                           </div>
           </Popup>
           <Popup active={state.activeFinalPopup}>

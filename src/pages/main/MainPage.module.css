@@ -30,7 +30,8 @@
     flex-direction: column;
     width: 500px;
     height: 680px;
-    gap: 40px;
+    gap: 30px;
+    margin-bottom: 20px;
   }
   .quizSelect {
     position: relative;
