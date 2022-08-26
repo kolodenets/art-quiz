@@ -25,7 +25,7 @@
   color: #660033;
 }
 
-@media screen and (min-width: 768px) and (max-width:1024px){
+@media screen and (min-width: 768px) and (max-width:1023.98px){
   .innerContainer {
     flex-direction: column;
     width: 500px;
