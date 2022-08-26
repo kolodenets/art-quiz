@@ -45,8 +45,6 @@ const PicturesGame = ({ cardNumber }) => {
   }
 
   const checkAnswer = (answer) => {
-    // delete animation from image
-    imageRef.current.classList = style.image
     
     if( answer === correctAns) {
       audio.src = '../sounds/correct-answer-sound.mp3'
@@ -80,9 +78,6 @@ const PicturesGame = ({ cardNumber }) => {
     const playingCard = localStorage.getItem('game-range');
     localStorage.setItem(`pictures-card${playingCard}-result`, `${state.correctAnsCount}`);
     if (current < 9) {
-      // add animation to image
-      imageRef.current.classList = `${style.image} ${style.animated}` 
-
       dispatch({type: 'changeActive', payload: false})
       setCurrent(prev => prev + 1)
       setNext(prev => prev + 1)
@@ -108,16 +103,13 @@ const PicturesGame = ({ cardNumber }) => {
     }
     // check is timer on
     const isTimer = localStorage.getItem('timer') === 'true' ? true : false
-
+    
     useEffect(() => {
       gameData = gameInfo.slice((card - 1)*10, card*10 );
       startingPic = Number(gameData[0].imageNum)
       setNext(startingPic)
       setCurrent(0)
       dispatch({type: 'resetCount'})
-      
-      // add animation to image
-      imageRef.current.classList = `${style.image} ${style.animated}` 
     }, [card])
 
   return (
