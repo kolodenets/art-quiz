@@ -38,6 +38,9 @@ p {
 }
 
 @media screen and (min-width: 360px) and (max-width: 767.98px) {
+  body {
+    height: 700px;
+  }
   .app {
     padding-top: 20px;
   }

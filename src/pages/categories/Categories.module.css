@@ -24,6 +24,7 @@
   gap: 20px;
   flex-wrap: wrap;
   justify-content: space-between;
+  transition: all 0.5s;
 }
 
 .btnContainer {
@@ -52,4 +53,79 @@
 
 .visible {
   opacity: 0.6;
+}
+
+.bottomBG {
+  opacity: 0;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  width: 753px;
+  height: 122px;
+  top: 786px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 1));
+}
+.bottomBG img {
+  cursor: pointer;
+  transition: all 0.5s;
+}
+
+@media screen and (min-width: 768px) and (max-width:1023.98px) {
+  .innerContainer {
+    width: 751px;
+  }
+  .outerItemsContainer {
+    height: 700px;
+    overflow-y: hidden;
+  }
+  .itemsContainer {
+    display: flex;
+    width: 751px;
+    height: 700px;
+    gap: 5px;
+    justify-content: normal;
+  }
+  .bottomBG {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+}
+
+@media screen and (min-width: 360px) and (max-width: 767.98px) {
+  .innerContainer {
+    width: 315px;
+    position: relative;
+    margin-top: 40px;
+  }
+
+  .outerItemsContainer {
+    height: 436px;
+    overflow-y: hidden;
+  }
+
+  .title {
+    position: absolute;
+    font-size: 24px;
+    line-height: 29px;
+    top: -44px;
+    left: 81px;
+  }
+  .itemsContainer {
+    display: flex;
+    overflow-y: hidden;
+    width: 349px;
+    height: 700px;
+    gap: 2px;
+    justify-content: normal;
+  }
+  .bottomBG {
+    opacity: 1;
+    pointer-events: all;
+    width: 350px;
+    height: 72px;
+    top: 595px;
+  }
 }

@@ -6,6 +6,7 @@ import styles from './Categories.module.css'
 import { BsHouseFill } from "react-icons/bs";
 import {AiTwotoneStar} from "react-icons/ai"
 import Card from '../../components/card/Card';
+import { useRef } from 'react';
 
 
 export const styledBtn = {
@@ -28,6 +29,8 @@ export const iconStyle = { width: '40px', height: '40px'}
 export const numbers = [1,2,3,4,5,6,7,8,9,10]
 
 const Categories = () => {
+  const ref = useRef();
+  const imgRef = useRef();
   const game = localStorage.getItem('quiz');
   const navigate = useNavigate();
   const handleHomeBtnClick = () => {
@@ -36,7 +39,10 @@ const Categories = () => {
   const handleScoreBtnClick = () => {
     navigate('/score')
   }
-
+  const handleNextClick = () => {
+    ref.current.style.marginTop === '-300px' ? ref.current.style.marginTop = '0' : ref.current.style.marginTop = '-300px';
+    ref.current.style.marginTop === '-300px' ? imgRef.current.style.transform = 'rotate(180deg)' : imgRef.current.style.transform = 'rotate(0deg)';
+  }
   return (
     <div className='outerContainer'>
       <LogoImage/>
@@ -48,8 +54,13 @@ const Categories = () => {
         </div>
         
       </div>
-      <div className={styles.itemsContainer}>
+      <div className={styles.outerItemsContainer}>
+        <div className={styles.itemsContainer} ref={ref}>
         {numbers.map(item => <Card key={item} number={item} imgNumber={item} game={game}/>)}
+      </div>
+      </div>
+      <div className={styles.bottomBG}>
+        <img src='../images/next-down.png' alt="prev" onClick={handleNextClick} ref={imgRef}/>
       </div>
     </div>
   );

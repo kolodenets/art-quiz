@@ -31,3 +31,25 @@
 .image img {
   padding-top: 10px;
 }
+
+@media screen and (min-width: 360px) and (max-width: 767.98px) {
+  .container {
+    width: 115px;
+  }
+  .number {
+    font-size: 36px;
+    line-height: 44px;
+  }
+  .result {
+    font-size: 14px;
+    line-height: 17px;
+    padding-top: 16px;
+    padding-right: 8px;
+  }
+  .image {
+    height: 137px;
+  }
+  .image img {
+    width: 115px;
+  }
+}
