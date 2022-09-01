@@ -20,11 +20,13 @@
 .correct {
   background: url('./../../../public/images/right-answer.png');
   background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .wrong {
   background: url('./../../../public/images/wrong-answer.png');
   background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .imageContainer {
@@ -91,4 +93,31 @@
 }
 .closed {
   animation: toBottom 1s;
+}
+@media screen and (min-width: 360px) and (max-width: 767.98px) {
+  .container {
+    flex-direction: column;
+    width: 115px;
+    height: 140px;
+  }
+  .imageContainer {
+    width: 115px;
+    height: 115px;
+  }
+  .result {
+    width: 15.1px;
+    height: 15.1px;
+  }
+  .info {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: 115px;
+    font-size: 10px;
+    line-height: 14px;
+    height: 101px;
+  }
+  .opened {
+    top: 39px;
+  }
 }

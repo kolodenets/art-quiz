@@ -61,9 +61,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  position: absolute;
   width: 753px;
   height: 122px;
+  position: absolute;
   top: 786px;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 1));
 }
@@ -111,11 +111,11 @@
     font-size: 24px;
     line-height: 29px;
     top: -44px;
-    left: 81px;
+    left: 50%;
+    transform: translateX(-50%);
   }
   .itemsContainer {
     display: flex;
-    overflow-y: hidden;
     width: 349px;
     height: 700px;
     gap: 2px;

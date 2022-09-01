@@ -104,7 +104,8 @@ const PicturesGame = ({ cardNumber }) => {
     }
     // check is timer on
     const isTimer = localStorage.getItem('timer') === 'true' ? true : false
-    
+
+
     useEffect(() => {
       gameData = gameInfo.slice((card - 1)*10, card*10 );
       startingPic = Number(gameData[0].imageNum)
@@ -113,12 +114,10 @@ const PicturesGame = ({ cardNumber }) => {
       dispatch({type: 'resetCount'})
     }, [card])
 
-    const btnStyleWithMargin = {...btnStyle, ...{marginLeft: '40px'}}
-
   return (
     <div className='outerContainer'>
       <div className={style.header}>
-        <LogoImage width={'94px'} margin={'20px 0 15px 0'}/>
+        <MyButton handleBtnClick={openMainPage} btnStyles={styledBtn} icon={<BsHouseFill style={iconStyle}/>}>Home</MyButton>
         <div className={style.quizText}>Кто автор этой картины?</div>
         <div className={style.timerContainer}>
           {isTimer && <div className={style.timerInnerContainer}>
@@ -168,7 +167,7 @@ const PicturesGame = ({ cardNumber }) => {
                           <div className={style.resultImg}></div>
                           <div className={style.btnsContainer}>
                             <MyButton icon={<BsHouseFill style={iconStyle}/>} handleBtnClick={openMainPage} btnStyles={styledBtn}>Home</MyButton>
-                            {card < 10 && <MyButton handleBtnClick={openNextQuiz} btnStyles={btnStyleWithMargin}>Next Quiz</MyButton>}
+                            {card < 10 && <MyButton handleBtnClick={openNextQuiz} btnStyles={btnStyle}>Next Quiz</MyButton>}
                           </div>
           </Popup>
           <Popup active={state.activeFinalPopup}>
